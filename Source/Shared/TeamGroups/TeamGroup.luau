@@ -10,6 +10,7 @@ setmetatable(Members :: any, Members);
 -- —————————————————————————————————————————————————————————————————————————— --
 
 local GroupService = game:GetService("GroupService");
+local HttpService = game:GetService("HttpService");
 local Players = game:GetService("Players");
 local Teams = game:GetService("Teams");
 
@@ -28,6 +29,7 @@ function TeamGroup.New(name: string, colour: BrickColor?, robloxGroupId: number?
 	local self, priv = setmetatable({}, Members), {};
 	Members[self] = priv;
 
+	self.Id = HttpService:GenerateGUID(false);
 	self.Name = name;
 	self.BrickColour = colour or BrickColor.Gray();
 	self.RobloxGroupId = robloxGroupId;

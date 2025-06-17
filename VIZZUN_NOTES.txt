@@ -8,6 +8,12 @@
 	ClassSelection
 	TeamSelection
 
+•	Add a server-sided response to all the remotes in
+	Source\Shared\TeamGroups\TeamGroupRemotes.luau
+•	Also, maybe move Source\Shared\TeamGroups\TeamInitialiser.luau to
+	the server source folder?
+•	colour coding here lol??
+
 # ———————————————————————————————————————————————————————————————————————————— #
 #                                      Wip                                     #
 # ———————————————————————————————————————————————————————————————————————————— #
@@ -15,6 +21,10 @@
 •	Source\Client\UI\QuickAccess\QuickAccessController.luau
 	Still needs all button functionality added to it. Each button
 	should toggle the corresponding Gui through said Gui's controller.
+
+•	Finish the client-sided interaction with
+	Source\Shared\TeamGroups\TeamGroupRemotes.luau — located in
+	Source\Client\UI\TeamSelection\TeamSelectionController.luau.
 
 # ———————————————————————————————————————————————————————————————————————————— #
 #                               Ready for Testing                              #
@@ -26,3 +36,6 @@
 # ———————————————————————————————————————————————————————————————————————————— #
 #                                   Finished                                   #
 # ———————————————————————————————————————————————————————————————————————————— #
+
+•	Source\Client\UI\Dragger.luau — Still needs to be added to retractable
+	panels in appropriate scripts.

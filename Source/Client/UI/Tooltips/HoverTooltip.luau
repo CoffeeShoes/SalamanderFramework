@@ -13,6 +13,10 @@ local UpdateConnection: RBXScriptConnection?;
 local MOUSE_X_OFFSET = 0;
 local MOUSE_Y_OFFSET = 0;
 
+-- —————————————————————————————————————————————————————————————————————————— --
+--                                   Methods                                  --
+-- —————————————————————————————————————————————————————————————————————————— --
+
 function HoverTooltip.Set(message: string)
 	MainFrame.Content.Text = message;
 
@@ -28,9 +32,15 @@ function HoverTooltip.Disable()
 	MainFrame.Visible = false;
 end
 
--- Initialise
+-- —————————————————————————————————————————————————————————————————————————— --
+--                             Gui Initialisation                             --
+-- —————————————————————————————————————————————————————————————————————————— --
 
 Gui.ResetOnSpawn = false;
 Gui.Parent = Client.PlayerGui;
+
+-- —————————————————————————————————————————————————————————————————————————— --
+--                                     ...                                    --
+-- —————————————————————————————————————————————————————————————————————————— --
 
 return HoverTooltip;

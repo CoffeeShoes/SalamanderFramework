@@ -7,6 +7,14 @@ local TeamGroup = require("./TeamGroup");
 local ActiveTeamGroups = {} :: { TeamGroup.TeamGroup };
 local RoundInProgress = false;
 
+-- —————————————————————————————————————————————————————————————————————————— --
+--                                   Methods                                  --
+-- —————————————————————————————————————————————————————————————————————————— --
+
+function RoundInitialiser.GetActiveTeamGroups()
+	return ActiveTeamGroups;
+end
+
 function RoundInitialiser.AddTeamGroups(teamGroups: { TeamGroup.TeamGroup })
 	if RoundInProgress then return; end
 	for _, group in teamGroups do
@@ -25,5 +33,9 @@ end
 function RoundInitialiser.IsRoundInProgress()
 	return RoundInProgress;
 end
+
+-- —————————————————————————————————————————————————————————————————————————— --
+--                                     ...                                    --
+-- —————————————————————————————————————————————————————————————————————————— --
 
 return RoundInitialiser;
