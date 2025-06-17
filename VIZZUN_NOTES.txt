@@ -1,0 +1,28 @@
+# ———————————————————————————————————————————————————————————————————————————— #
+#                                Not Started Yet                               #
+# ———————————————————————————————————————————————————————————————————————————— #
+
+•	Controllers for:
+	Admin
+	CaptureInfo
+	ClassSelection
+	TeamSelection
+
+# ———————————————————————————————————————————————————————————————————————————— #
+#                                      Wip                                     #
+# ———————————————————————————————————————————————————————————————————————————— #
+
+•	Source\Client\UI\QuickAccess\QuickAccessController.luau
+	Still needs all button functionality added to it. Each button
+	should toggle the corresponding Gui through said Gui's controller.
+
+# ———————————————————————————————————————————————————————————————————————————— #
+#                               Ready for Testing                              #
+# ———————————————————————————————————————————————————————————————————————————— #
+
+•	Source\Client\UI\Tooltips\HoverTooltip.luau — test on the QuickAccess
+	buttons.
+
+# ———————————————————————————————————————————————————————————————————————————— #
+#                                   Finished                                   #
+# ———————————————————————————————————————————————————————————————————————————— #
