@@ -9,11 +9,18 @@ export type TeamGroupInfo = {
 	Id: string;
 	Name: string;
 	TeamColour: BrickColor;
-	Colour: Color3;
+	GroupId: number?;
 };
 
 -- —————————————————————————————————————————————————————————————————————————— --
---                                   Remotes                                  --
+--                              Server -> Client                              --
+-- —————————————————————————————————————————————————————————————————————————— --
+
+TeamGroupRemotes.ForceRefresh = RemoteWriter.GetEvent("ForceTeamGroupRefresh")
+:: RemoteWriter.Event<(), ()>;
+
+-- —————————————————————————————————————————————————————————————————————————— --
+--                              Client -> Server                              --
 -- —————————————————————————————————————————————————————————————————————————— --
 
 -- GetTeamGroupInfo • To retrieve TeamGroupInfo
@@ -23,11 +30,22 @@ export type TeamGroupInfo = {
 TeamGroupRemotes.GetTeamGroupInfo = RemoteWriter.GetFunction("GetTeamGroupInfo")
 :: RemoteWriter.Function<(), (), ({ TeamGroupId: string }), ({ TeamGroupInfo: TeamGroupInfo })>;
 
-TeamGroupRemotes.GetTeamGroupInfos = RemoteWriter.GetFunction("GetAllTeamGroupInfos")
+TeamGroupRemotes.GetAllTeamGroupInfos = RemoteWriter.GetFunction("GetAllTeamGroupInfos")
 :: RemoteWriter.Function<(), (), (), ({ AllTeamGroupInfos: { TeamGroupInfo } })>
 
 TeamGroupRemotes.ChangeTeamGroup = RemoteWriter.GetEvent("ChangeTeamGroup")
 :: RemoteWriter.Event<(), ({ TeamGroupId: string })>;
+
+-- Admin
+
+TeamGroupRemotes.CreateTeamGroup = RemoteWriter.GetFunction("CreateTeamGroup")
+:: RemoteWriter.Function<(), (), (), ({ TeamGroupInfo: TeamGroupInfo })>;
+
+TeamGroupRemotes.UpdateTeamGroup = RemoteWriter.GetEvent("UpdateTeamGroup")
+:: RemoteWriter.Event<(), ({ TeamGroupId: string, NewTeamGroupInfo: TeamGroupInfo })>;
+
+TeamGroupRemotes.MatchInProgress = RemoteWriter.GetFunction("MatchInProgress")
+:: RemoteWriter.Function<(), (), (), (boolean)>;
 
 -- —————————————————————————————————————————————————————————————————————————— --
 --                                     ...                                    --

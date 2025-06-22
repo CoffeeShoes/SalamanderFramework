@@ -32,6 +32,16 @@ function HoverTooltip.Disable()
 	MainFrame.Visible = false;
 end
 
+function HoverTooltip.AssignGuiElementTooltip(guiElement: GuiObject, tooltipMessage: string)
+	guiElement.MouseEnter:Connect(function()
+		HoverTooltip.Set(tooltipMessage);
+	end);
+
+	guiElement.MouseLeave:Connect(function()
+		HoverTooltip.Disable();
+	end);
+end
+
 -- —————————————————————————————————————————————————————————————————————————— --
 --                             Gui Initialisation                             --
 -- —————————————————————————————————————————————————————————————————————————— --

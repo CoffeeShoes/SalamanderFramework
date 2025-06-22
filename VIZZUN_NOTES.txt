@@ -1,22 +1,36 @@
 # ———————————————————————————————————————————————————————————————————————————— #
+#                                     Plans                                    #
+# ———————————————————————————————————————————————————————————————————————————— #
+
+
+
+# ———————————————————————————————————————————————————————————————————————————— #
 #                                Not Started Yet                               #
 # ———————————————————————————————————————————————————————————————————————————— #
 
-•	Controllers for:
-	Admin
-	CaptureInfo
-	ClassSelection
-	TeamSelection
-
 •	Add a server-sided response to all the remotes in
 	Source\Shared\TeamGroups\TeamGroupRemotes.luau
-•	Also, maybe move Source\Shared\TeamGroups\TeamInitialiser.luau to
-	the server source folder?
 •	colour coding here lol??
+
+•	Add Source\Client\UI\Dragger.luau to all the different retractable
+	panels in appropriate places.
+
+•	Make Logistics Gui.
 
 # ———————————————————————————————————————————————————————————————————————————— #
 #                                      Wip                                     #
 # ———————————————————————————————————————————————————————————————————————————— #
+
+•	Source\Shared\Spawns\SpawnConfig.luau — Set up all the relevant spawns,
+	and add a server-sided class called "Spawn" or something, that handles
+	the actual spawn functionality.
+
+•	Handlers for:
+	Admin (WIP)
+	CaptureInfo
+	ClassSelection
+	TeamSelection (WIP)
+	Logistics
 
 •	Source\Client\UI\QuickAccess\QuickAccessController.luau
 	Still needs all button functionality added to it. Each button
@@ -26,12 +40,16 @@
 	Source\Shared\TeamGroups\TeamGroupRemotes.luau — located in
 	Source\Client\UI\TeamSelection\TeamSelectionController.luau.
 
+•	Source\Client\UI\Admin\AdminUI.luau
+
 # ———————————————————————————————————————————————————————————————————————————— #
 #                               Ready for Testing                              #
 # ———————————————————————————————————————————————————————————————————————————— #
 
 •	Source\Client\UI\Tooltips\HoverTooltip.luau — test on the QuickAccess
 	buttons.
+
+•	Source\Client\UI\Admin\ColourPickerWindow.luau
 
 # ———————————————————————————————————————————————————————————————————————————— #
 #                                   Finished                                   #

@@ -14,6 +14,8 @@ local HttpService = game:GetService("HttpService");
 local Players = game:GetService("Players");
 local Teams = game:GetService("Teams");
 
+local TeamGroupRemotes = require(game.ReplicatedStorage.Source.TeamGroups.TeamGroupRemotes);
+
 local 	DEFAULT_ICON_ASSET_ID	= "rbxassetid://0";
 local 	SPECTATING_TEAM 		= Instance.new("Team");
 	SPECTATING_TEAM.Name 		= "Spectator";
@@ -32,14 +34,14 @@ function TeamGroup.New(name: string, colour: BrickColor?, robloxGroupId: number?
 	self.Id = HttpService:GenerateGUID(false);
 	self.Name = name;
 	self.BrickColour = colour or BrickColor.Gray();
-	self.RobloxGroupId = robloxGroupId;
+	self.GroupId = robloxGroupId;
 
 	self.Team = Instance.new("Team");
 	self.Team.Name = self.Name;
 	self.Team.TeamColor = self.BrickColour;
 
-	if self.RobloxGroupId then
-		self.GroupInfo = GroupService:GetGroupInfoAsync(self.RobloxGroupId);
+	if self.GroupId then
+		self.GroupInfo = GroupService:GetGroupInfoAsync(self.GroupId);
 		self.IconAssetId = self.GroupInfo.EmblemUrl;
 		self.IconColour = Color3.new(1, 1, 1);
 	else
@@ -60,6 +62,20 @@ function TeamGroup:Destroy();
 	end
 
 	self.Team:Destroy();
+end
+
+function TeamGroup:GetInfo(): TeamGroupRemotes.TeamGroupInfo
+	local priv = Members[self];
+
+	local response: TeamGroupRemotes.TeamGroupInfo = {
+		Id = self.Id;
+		Name = self.Name;
+		TeamColour = self.Team.TeamColor;
+		Colour = self.Team.TeamColor.Color;
+		GroupId = self.GroupId;
+	};
+
+	return response;
 end
 
 -- —————————————————————————————————————————————————————————————————————————— --
