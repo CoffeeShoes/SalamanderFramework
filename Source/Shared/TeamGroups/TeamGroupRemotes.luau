@@ -1,6 +1,8 @@
 local TeamGroupRemotes = {};
 local RemoteWriter = require(game.ReplicatedStorage.Source.RemoteWriter);
 
+local SpawnInfo = require(game.ReplicatedStorage.Source.Maps.Spawns.SpawnInfo);
+
 -- —————————————————————————————————————————————————————————————————————————— --
 --                                    Types                                   --
 -- —————————————————————————————————————————————————————————————————————————— --
@@ -10,6 +12,7 @@ export type TeamGroupInfo = {
 	Name: string;
 	TeamColour: BrickColor;
 	GroupId: number?;
+	SpawnInfos: { SpawnInfo.SpawnInfo };
 };
 
 -- —————————————————————————————————————————————————————————————————————————— --

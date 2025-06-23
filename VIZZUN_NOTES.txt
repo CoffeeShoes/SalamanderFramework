@@ -16,14 +16,19 @@
 	panels in appropriate places.
 
 •	Make Logistics Gui.
+•	Set up all the maps
 
 # ———————————————————————————————————————————————————————————————————————————— #
 #                                      Wip                                     #
 # ———————————————————————————————————————————————————————————————————————————— #
 
-•	Source\Shared\Spawns\SpawnConfig.luau — Set up all the relevant spawns,
-	and add a server-sided class called "Spawn" or something, that handles
-	the actual spawn functionality.
+•	Make the client sided handling for map loading, i.e. in the admin menu.
+	Make a MapRemotes script, and add server handling for said script in
+	Source\Server\Maps\MapLoader.luau or thereabouts. 
+•	Both the "GetCurrentMapInfo" and "GetTeamGroupRemote" remotes in their
+	individual remote modules return an object with a property called
+	"SpawnInfos". Compare these two when an admin is toggling spawns, to
+	see which ones are disabled and what not.
 
 •	Handlers for:
 	Admin (WIP)
