@@ -1,41 +1,36 @@
-local MapInfo = {};
-local Meta = { __index = MapInfo };
+local TeamGroupInfo = {};
+local Meta = { __index = TeamGroupInfo };
 local Members = {};
 
 -- —————————————————————————————————————————————————————————————————————————— --
 --                                    Class                                   --
 -- —————————————————————————————————————————————————————————————————————————— --
 
-local SpawnInfo = require("./Spawns/SpawnInfo");
-local CapturePointInfo = require("./CapturePoints/CapturePointInfo");
-
-export type MapSize = (
-	| "Small"
-	| "Medium"
-	| "Large"
-);
+local SpawnInfo = require(game.ReplicatedStorage.Source.Maps.Spawns.SpawnInfo);
 
 -- —————————————————————————————————————————————————————————————————————————— --
 --                                   Object                                   --
 -- —————————————————————————————————————————————————————————————————————————— --
 
-function MapInfo.New(
+function TeamGroupInfo.New(
 	id: string,
 	displayName: string,
-	size: MapSize,
-	spawnInfos: { SpawnInfo.SpawnInfo },
-	capturePointInfos: { CapturePointInfo.CapturePointInfo },
-	imageAssetId: string?
+	teamColour: BrickColor,
+	groupId: number?,
+	spawnInfos: { SpawnInfo.SpawnInfo }?,
+	members: { Player }?,
+	teamLeaders: { Player }?,
 )
 	local self, priv = setmetatable({}, Meta), {};
 	Members[self] = priv;
 
 	self.Id = id;
 	self.DisplayName = displayName;
-	self.SpawnInfos = spawnInfos;
-	self.CapturePointInfos = (capturePointInfos or {}) :: { CapturePointInfo.CapturePointInfo };
-	self.Size = size;
-	self.ImageAssetId = imageAssetId or "rbxassetid://0";
+	self.TeamColour = teamColour;
+	self.GroupId = groupId;
+	self.SpawnInfos = spawnInfos or {};
+	self.Members = members or {};
+	self.TeamLeaders = teamLeaders or {};
 
 	return self;
 end
@@ -44,5 +39,5 @@ end
 --                                     ...                                    --
 -- —————————————————————————————————————————————————————————————————————————— --
 
-export type MapInfo = typeof(MapInfo.New(...));
-return MapInfo;
+export type TeamGroupInfo = typeof(TeamGroupInfo.New(...));
+return TeamGroupInfo;

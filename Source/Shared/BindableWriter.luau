@@ -23,6 +23,10 @@ export type Function<Input..., Output...> = {
 	OnInvoke: (Input...) -> (Output...);
 };
 
+type Response<R> = { Type: "Response", Data: R };
+type Error<E> = { Type: "Error", Error: E };
+export type Result<R, E> = Response<R> | Error<E>;
+
 -- —————————————————————————————————————————————————————————————————————————— --
 --                                   Methods                                  --
 -- —————————————————————————————————————————————————————————————————————————— --

@@ -1,41 +1,28 @@
-local MapInfo = {};
-local Meta = { __index = MapInfo };
+local CaptureMatchStats = {};
+local Meta = { __index = CaptureMatch };
 local Members = {};
 
 -- —————————————————————————————————————————————————————————————————————————— --
 --                                    Class                                   --
 -- —————————————————————————————————————————————————————————————————————————— --
 
-local SpawnInfo = require("./Spawns/SpawnInfo");
-local CapturePointInfo = require("./CapturePoints/CapturePointInfo");
+export type TeamGroupId = string;
 
-export type MapSize = (
-	| "Small"
-	| "Medium"
-	| "Large"
-);
+local Remotes = require(game.ReplicatedStorage.Source.TeamGroups.TeamGroupRemotes);
 
 -- —————————————————————————————————————————————————————————————————————————— --
 --                                   Object                                   --
 -- —————————————————————————————————————————————————————————————————————————— --
 
-function MapInfo.New(
-	id: string,
-	displayName: string,
-	size: MapSize,
-	spawnInfos: { SpawnInfo.SpawnInfo },
-	capturePointInfos: { CapturePointInfo.CapturePointInfo },
-	imageAssetId: string?
-)
+function CaptureMatchStats.New()
 	local self, priv = setmetatable({}, Meta), {};
 	Members[self] = priv;
 
-	self.Id = id;
-	self.DisplayName = displayName;
-	self.SpawnInfos = spawnInfos;
-	self.CapturePointInfos = (capturePointInfos or {}) :: { CapturePointInfo.CapturePointInfo };
-	self.Size = size;
-	self.ImageAssetId = imageAssetId or "rbxassetid://0";
+	self.Type = "Capture" :: "Capture";
+	self.CapturePoints = {} :: { { CapturePointId: string, ControllingTeamGroupId: string?, ProgressAlpha: number  } };
+
+	self.TeamGroupScores = {} :: { { TeamGroupId: string, CaptureScore: number, Kills: number, Deaths: number, Damage: number } };
+	self.PlayerScores = {} :: { { UserId: number, Username: string, CaptureScore: number, Kills: number, Deaths: number, Damage: number } };
 
 	return self;
 end
@@ -44,5 +31,5 @@ end
 --                                     ...                                    --
 -- —————————————————————————————————————————————————————————————————————————— --
 
-export type MapInfo = typeof(MapInfo.New(...));
-return MapInfo;
+export type CaptureMatchStats = typeof(CaptureMatchStats.New(...));
+return CaptureMatchStats;

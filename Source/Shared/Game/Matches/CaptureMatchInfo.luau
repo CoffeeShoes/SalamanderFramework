@@ -1,41 +1,27 @@
-local MapInfo = {};
-local Meta = { __index = MapInfo };
+local CaptureMatchInfo = {};
+local Meta = { __index = CaptureMatchInfo };
 local Members = {};
 
 -- —————————————————————————————————————————————————————————————————————————— --
 --                                    Class                                   --
 -- —————————————————————————————————————————————————————————————————————————— --
 
-local SpawnInfo = require("./Spawns/SpawnInfo");
-local CapturePointInfo = require("./CapturePoints/CapturePointInfo");
-
-export type MapSize = (
-	| "Small"
-	| "Medium"
-	| "Large"
-);
-
 -- —————————————————————————————————————————————————————————————————————————— --
 --                                   Object                                   --
 -- —————————————————————————————————————————————————————————————————————————— --
 
-function MapInfo.New(
-	id: string,
-	displayName: string,
-	size: MapSize,
-	spawnInfos: { SpawnInfo.SpawnInfo },
-	capturePointInfos: { CapturePointInfo.CapturePointInfo },
-	imageAssetId: string?
+function CaptureMatchInfo.New(
+	enabledCapsIds: { string }?,
+	matchTimeInSeconds: number?,
+	scoreGoal: number?
 )
 	local self, priv = setmetatable({}, Meta), {};
 	Members[self] = priv;
 
-	self.Id = id;
-	self.DisplayName = displayName;
-	self.SpawnInfos = spawnInfos;
-	self.CapturePointInfos = (capturePointInfos or {}) :: { CapturePointInfo.CapturePointInfo };
-	self.Size = size;
-	self.ImageAssetId = imageAssetId or "rbxassetid://0";
+	self.Type = "Capture" :: "Capture";
+	self.EnabledCapturePointsIds = enabledCapsIds;
+	self.ScoreGoal = scoreGoal or 1000;
+	self.MatchTimeInSeconds = matchTimeInSeconds or 1800;
 
 	return self;
 end
@@ -44,5 +30,5 @@ end
 --                                     ...                                    --
 -- —————————————————————————————————————————————————————————————————————————— --
 
-export type MapInfo = typeof(MapInfo.New(...));
-return MapInfo;
+export type CaptureMatchInfo = typeof(CaptureMatchInfo.New(...));
+return CaptureMatchInfo;

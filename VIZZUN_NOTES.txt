@@ -2,7 +2,25 @@
 #                                     Plans                                    #
 # ———————————————————————————————————————————————————————————————————————————— #
 
-
+	CONQUEST GAME MODE:
+•	Switch the button placements in the admin's menu selector, so
+	"Set Up Game Mode" is above "Configure Teams". That way, they are likely
+	to do the game mode setup first, before configuring teams.
+•	When the conquest mode is selected in the game mode config panel, there
+	should be an option to change which team is defending, and which is
+	attacking.
+•	If the conquest mode is active, the appearance of the spawn picker
+	screen should slightly change.
+	•	If picking spawns for the attacking team, toggling any spawn
+		other than the currently active one, if there is one, will make
+		that the new active spawn, and disable the old one. In this
+		case, there are no options for having multiplie spawns.
+	•	If picking spawns for the defending team, the "ENABLE" and
+		"DISABLE" buttons will be numbered. They can all be disabled,
+		so the admin can choose which spawn is E1. From that point on,
+		every spawn toggled on will be added as another defending point,
+		counting up — i.e., the second spawn toggled on will be E2, and
+		so on.
 
 # ———————————————————————————————————————————————————————————————————————————— #
 #                                Not Started Yet                               #
@@ -21,6 +39,10 @@
 # ———————————————————————————————————————————————————————————————————————————— #
 #                                      Wip                                     #
 # ———————————————————————————————————————————————————————————————————————————— #
+
+•	CONQUEST:
+	•	The conquest gamemode should not be selectable if the number of
+		teams does not equal 2.
 
 •	Make the client sided handling for map loading, i.e. in the admin menu.
 	Make a MapRemotes script, and add server handling for said script in

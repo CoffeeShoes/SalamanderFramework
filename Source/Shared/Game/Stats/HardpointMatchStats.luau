@@ -1,41 +1,27 @@
-local MapInfo = {};
-local Meta = { __index = MapInfo };
+local HardpointMatchStats = {};
+local Meta = { __index = HardpointMatchStats };
 local Members = {};
 
 -- —————————————————————————————————————————————————————————————————————————— --
 --                                    Class                                   --
 -- —————————————————————————————————————————————————————————————————————————— --
 
-local SpawnInfo = require("./Spawns/SpawnInfo");
-local CapturePointInfo = require("./CapturePoints/CapturePointInfo");
-
-export type MapSize = (
-	| "Small"
-	| "Medium"
-	| "Large"
-);
+export type TeamGroupId = string;
 
 -- —————————————————————————————————————————————————————————————————————————— --
 --                                   Object                                   --
 -- —————————————————————————————————————————————————————————————————————————— --
 
-function MapInfo.New(
-	id: string,
-	displayName: string,
-	size: MapSize,
-	spawnInfos: { SpawnInfo.SpawnInfo },
-	capturePointInfos: { CapturePointInfo.CapturePointInfo },
-	imageAssetId: string?
-)
+function HardpointMatchStats.New()
 	local self, priv = setmetatable({}, Meta), {};
 	Members[self] = priv;
 
-	self.Id = id;
-	self.DisplayName = displayName;
-	self.SpawnInfos = spawnInfos;
-	self.CapturePointInfos = (capturePointInfos or {}) :: { CapturePointInfo.CapturePointInfo };
-	self.Size = size;
-	self.ImageAssetId = imageAssetId or "rbxassetid://0";
+	self.Type = "Hardpoint" :: "Hardpoint";
+	self.ControllingTeamGroupId = nil :: string?;
+	self.ProgressAlpha = 0;
+	
+	self.TeamGroupScores = {} :: { { TeamGroupId: string, CaptureScore: number, Kills: number, Deaths: number, Damage: number } };
+	self.PlayerScores = {} :: { { UserId: number, Username: string, CaptureScore: number, Kills: number, Deaths: number, Damage: number } };
 
 	return self;
 end
@@ -44,5 +30,5 @@ end
 --                                     ...                                    --
 -- —————————————————————————————————————————————————————————————————————————— --
 
-export type MapInfo = typeof(MapInfo.New(...));
-return MapInfo;
+export type HardpointMatchStats = typeof(HardpointMatchStats.New(...));
+return HardpointMatchStats;

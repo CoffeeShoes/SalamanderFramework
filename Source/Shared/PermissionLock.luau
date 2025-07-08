@@ -4,6 +4,7 @@
 --	sort of common restriction. Currently this class supports:
 --
 --		• Restricting based a player's rank in a group
+--		• Restricting based on a player's team.
 --		• Restricting based on a player's UserId (i.e. only a
 --		  select few will have permission)
 --		• Restricting based on a player account's age.
@@ -49,6 +50,8 @@ function PermissionLock.New()
 	local self, priv = setmetatable({}, Members), {};
 	Members[self] = priv;
 
+	priv.TeamLock = nil :: Team?;
+
 --	All group ranks must be correct for a user to pass the lock.
 	priv.GroupLock = nil :: { [number]: NumberRange }?;
 
@@ -75,6 +78,10 @@ function PermissionLock:HasPermission(player: Player)
 	if priv.UserIdLock and userId ~= priv.UserIdLock then return false; end
 	if priv.AccountAgeLock and player.AccountAge < priv.AccountAgeLock then
 		return false;
+	end
+
+	if priv.TeamLock then
+		if player.Team ~= priv.TeamLock then return false; end
 	end
 
 	if priv.CustomLock then
@@ -138,6 +145,13 @@ function PermissionLock:AddLeaderstatLock(statName: string, minScore: number)
 	if not priv.LeaderstatLocks then priv.LeaderstatLocks = {}; end
 
 	priv.LeaderstatLocks[statName] = minScore;
+	return self;
+end
+
+function PermissionLock:AddTeamLock(team: Team)
+	local priv = Members[self];
+	
+	priv.TeamLock = team;
 	return self;
 end
 

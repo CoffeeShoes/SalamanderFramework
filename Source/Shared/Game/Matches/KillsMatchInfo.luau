@@ -1,41 +1,26 @@
-local MapInfo = {};
-local Meta = { __index = MapInfo };
+local KillsMatchInfo = {};
+local Meta = { __index = KillsMatchInfo };
 local Members = {};
 
 -- —————————————————————————————————————————————————————————————————————————— --
 --                                    Class                                   --
 -- —————————————————————————————————————————————————————————————————————————— --
 
-local SpawnInfo = require("./Spawns/SpawnInfo");
-local CapturePointInfo = require("./CapturePoints/CapturePointInfo");
 
-export type MapSize = (
-	| "Small"
-	| "Medium"
-	| "Large"
-);
 
 -- —————————————————————————————————————————————————————————————————————————— --
 --                                   Object                                   --
 -- —————————————————————————————————————————————————————————————————————————— --
 
-function MapInfo.New(
-	id: string,
-	displayName: string,
-	size: MapSize,
-	spawnInfos: { SpawnInfo.SpawnInfo },
-	capturePointInfos: { CapturePointInfo.CapturePointInfo },
-	imageAssetId: string?
+function KillsMatchInfo.New(
+	killGoal: number?,
+	matchTimeInSeconds: number?
 )
 	local self, priv = setmetatable({}, Meta), {};
 	Members[self] = priv;
 
-	self.Id = id;
-	self.DisplayName = displayName;
-	self.SpawnInfos = spawnInfos;
-	self.CapturePointInfos = (capturePointInfos or {}) :: { CapturePointInfo.CapturePointInfo };
-	self.Size = size;
-	self.ImageAssetId = imageAssetId or "rbxassetid://0";
+	self.Type = "Kills";
+	self.KillGoal = killGoal or 100;
 
 	return self;
 end
@@ -44,5 +29,5 @@ end
 --                                     ...                                    --
 -- —————————————————————————————————————————————————————————————————————————— --
 
-export type MapInfo = typeof(MapInfo.New(...));
-return MapInfo;
+export type KillsMatchInfo = typeof(KillsMatchInfo.New(...));
+return KillsMatchInfo;

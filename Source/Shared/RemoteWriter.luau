@@ -18,7 +18,7 @@ export type Event<ServerInput..., ClientInput...> = {
 		ConnectParallel: (unknown, (ServerInput...) -> ()) -> (RBXScriptConnection);
 	};
 
-	FireServer: (unknown,ClientInput...) -> ();
+	FireServer: (unknown, ClientInput...) -> ();
 	OnServerEvent: {
 		Connect: (unknown, (client: Player, ClientInput...) -> ()) -> (RBXScriptConnection);
 		ConnectParallel: (unknown, (client: Player, ClientInput...) -> ()) -> (RBXScriptConnection);
@@ -32,6 +32,10 @@ export type Function<ServerInput..., ClientResponse..., ClientInput..., ServerRe
 	InvokeServer: (unknown, ClientInput...) -> (ServerResponse...);
 	OnServerInvoke: (client: Player, ClientInput...) -> (ServerResponse...);
 };
+
+type Response<R> = { Type: "Response", Data: R };
+type Error<E> = { Type: "Error", Error: E };
+export type Result<R, E> = Response<R> | Error<E>;
 
 -- —————————————————————————————————————————————————————————————————————————— --
 --                                   Methods                                  --

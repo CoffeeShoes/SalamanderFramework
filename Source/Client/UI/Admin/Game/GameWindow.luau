@@ -1,0 +1,5 @@
+local GameWindow = {};
+
+
+
+return GameWindow;

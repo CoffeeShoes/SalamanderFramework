@@ -1,41 +1,24 @@
-local MapInfo = {};
-local Meta = { __index = MapInfo };
+local KillsMatchStats = {};
+local Meta = { __index = KillsMatchStats };
 local Members = {};
 
 -- —————————————————————————————————————————————————————————————————————————— --
 --                                    Class                                   --
 -- —————————————————————————————————————————————————————————————————————————— --
 
-local SpawnInfo = require("./Spawns/SpawnInfo");
-local CapturePointInfo = require("./CapturePoints/CapturePointInfo");
-
-export type MapSize = (
-	| "Small"
-	| "Medium"
-	| "Large"
-);
+export type TeamGroupId = string;
 
 -- —————————————————————————————————————————————————————————————————————————— --
 --                                   Object                                   --
 -- —————————————————————————————————————————————————————————————————————————— --
 
-function MapInfo.New(
-	id: string,
-	displayName: string,
-	size: MapSize,
-	spawnInfos: { SpawnInfo.SpawnInfo },
-	capturePointInfos: { CapturePointInfo.CapturePointInfo },
-	imageAssetId: string?
-)
+function KillsMatchStats.New()
 	local self, priv = setmetatable({}, Meta), {};
 	Members[self] = priv;
 
-	self.Id = id;
-	self.DisplayName = displayName;
-	self.SpawnInfos = spawnInfos;
-	self.CapturePointInfos = (capturePointInfos or {}) :: { CapturePointInfo.CapturePointInfo };
-	self.Size = size;
-	self.ImageAssetId = imageAssetId or "rbxassetid://0";
+	self.Type = "Kills" :: "Kills";
+	self.TeamGroupScores = {} :: { { TeamGroupId: string, Kills: number, Deaths: number, Damage: number } };
+	self.PlayerScores = {} :: { { UserId: number, Username: string, Kills: number, Deaths: number, Damage: number } };
 
 	return self;
 end
@@ -44,5 +27,5 @@ end
 --                                     ...                                    --
 -- —————————————————————————————————————————————————————————————————————————— --
 
-export type MapInfo = typeof(MapInfo.New(...));
-return MapInfo;
+export type KillsMatchStats = typeof(KillsMatchStats.New(...));
+return KillsMatchStats;

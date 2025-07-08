@@ -13,6 +13,7 @@ local Teams = game:GetService("Teams");
 
 local TeamGroupRemotes = require(game.ReplicatedStorage.Source.TeamGroups.TeamGroupRemotes);
 local SpawnLocation = require(game.ServerScriptService.Source.Maps.Spawns.SpawnLocation);
+local TeamGroupInfo = require(game.ReplicatedStorage.Source.TeamGroups.TeamGroupInfo);
 
 local 	DEFAULT_ICON_ASSET_ID	= "rbxassetid://0";
 local 	SPECTATING_TEAM 		= Instance.new("Team");
@@ -26,9 +27,9 @@ local TeamGroupInstances = {};
 function TeamGroup.UnteamPlayer(player: Player)
 	for _, self in TeamGroupInstances do
 		local priv = Members[self];
-		local i = table.find(priv.Players, player);
+		local i = table.find(priv.Members, player);
 		if not i then continue; end
-		table.remove(priv.Players, i);
+		table.remove(priv.Members, i);
 	end
 end
 
@@ -37,21 +38,22 @@ end
 --                                   Object                                   --
 -- —————————————————————————————————————————————————————————————————————————— --
 
-function TeamGroup.New(name: string, colour: BrickColor?, robloxGroupId: number?, spawnLocations: { SpawnLocation.SpawnLocation }?)
+function TeamGroup.New(displayName: string, colour: BrickColor?, robloxGroupId: number?, spawnLocations: { SpawnLocation.SpawnLocation }?)
 	local self, priv = setmetatable({}, Members), {};
 	Members[self] = priv;
 
 	self.Id = HttpService:GenerateGUID(false);
-	self.Name = name;
+	self.DisplayName = displayName;
 	self.BrickColour = colour or BrickColor.Gray();
 	self.GroupId = robloxGroupId;
 
 	self.Team = Instance.new("Team");
-	self.Team.Name = self.Name;
+	self.Team.Name = self.DisplayName;
 	self.Team.TeamColor = self.BrickColour;
 
 	priv.SpawnLocations = spawnLocations or {} :: { SpawnLocation.SpawnLocation };
-	priv.Players = {} :: { Player };
+	priv.Members = {} :: { Player };
+	priv.TeamLeaders = {};
 
 	if self.GroupId then
 		self.GroupInfo = GroupService:GetGroupInfoAsync(self.GroupId);
@@ -75,16 +77,17 @@ function TeamGroup:GetInfo(): TeamGroupRemotes.TeamGroupInfo
 		table.insert(spawnInfos, spawn.Info);
 	end
 
-	local response: TeamGroupRemotes.TeamGroupInfo = {
-		Id = self.Id;
-		Name = self.Name;
-		TeamColour = self.Team.TeamColor;
-		Colour = self.Team.TeamColor.Color;
-		GroupId = self.GroupId;
-		SpawnInfos = spawnInfos;
-	};
+	local info = TeamGroupInfo.New(
+		self.Id,
+		self.DisplayName,
+		self.TeamColour,
+		self.GroupId,
+		self.SpawnInfos,
+		self.Members,
+		self.TeamLeaders
+	);
 
-	return response;
+	return info;
 end
 
 function TeamGroup:ChangeGroupId(newGroupId: number)
@@ -117,7 +120,12 @@ end
 function TeamGroup:TeamPlayer(player: Player)
 	local priv = Members[self];
 	TeamGroup.UnteamPlayer(player);
-	table.insert(priv.Players, player);
+	table.insert(priv.Members, player);
+end
+
+function TeamGroup:SetTeamLeaders(teamLeaders: { Player })
+	local priv = Members[self];
+	priv.TeamLeaders = teamLeaders;
 end
 
 function TeamGroup:Destroy()
@@ -140,7 +148,7 @@ Players.PlayerAdded:Connect(function(player)
 	player.CharacterAdded:Connect(function(character)
 		for _, self in TeamGroupInstances do
 			local priv = Members[self];
-			if not table.find(priv.Players, player) then continue; end
+			if not table.find(priv.Members, player) then continue; end
 			if #priv.SpawnLocations == 0 then continue; end
 			local spawn = priv.SpawnLocations[math.random(1, #priv.SpawnLocations)];
 			spawn:TeleportPlayer(player);
